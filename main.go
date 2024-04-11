@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"test-blog/models"
 )
 
 // 定一个index数据的结构体，里面有两个字符数类型的参数，定义json格式
@@ -15,9 +16,6 @@ type IndexData struct {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	var indexData IndexData
-	indexData.Title = "go博客"
-	indexData.Desc = "现在是入门教程"
 	t := template.New("index.html")
 	//1. 拿到当前的路径
 	path, _ := os.Getwd()
@@ -30,7 +28,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 	t, _ = t.ParseFiles(path+"/template/index.html", home, header, footer, personal, post, pagination)
 
 	//页面上涉及到的所有的数据，必须有定义
-	t.Execute(w, indexData)
+	var hr = &models.HomeResponse{}
+	t.Execute(w, hr)
+
 }
 
 func main() {

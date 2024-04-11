@@ -13,7 +13,7 @@
 // @grant        GM.getValue
 // ==/UserScript==
 {
-  let defaultHTML = `<html>
+    let defaultHTML = `<html>
   <head>
       <meta charset="utf-8">
       <title>CSS睡猫</title>
@@ -30,7 +30,7 @@
   <body><div style="height: 250px;width: 250px;overflow: hidden;display: inline-block;"><div class="main"><span class="stand"></span><div class="cat"><div class="body"></div><div class="head"><div class="ear"></div><div class="ear"></div></div><div class="face"><div class="nose"></div><div class="whisker-container"><div class="whisker"></div><div class="whisker"></div></div><div class="whisker-container"><div class="whisker"></div><div class="whisker"></div></div></div><div class="tail-container"><div class="tail"><div class="tail"><div class="tail"><div class="tail"><div class="tail"><div class="tail"><div class="tail"></div></div></div></div></div></div></div></div></div></div></div></body>
 </html>
 `;
-  let html = `<div class="touch-fish" style="-webkit-user-select: none; width: 250px;height: 250px;z-index: 9998;position: fixed;right: 0;bottom: 0;">
+    let html = `<div class="touch-fish" style="-webkit-user-select: none; width: 250px;height: 250px;z-index: 9998;position: fixed;right: 0;bottom: 0;">
       <iframe class="showHtml" style="width: 250px;height: 250px;position: absolute;border: none;">
       </iframe>
       <div class="touch-fish-toolbar" style="position: absolute;top: 0;left: 0;display:grid;z-index: 9999;">
@@ -38,57 +38,58 @@
           <span style="padding:10px;cursor:pointer" class="change" title="下一个"><svg class="icon" style="width: 20px;height: 20px;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="946"><path d="M810.752 205.397333a213.333333 213.333333 0 0 1 213.333333 213.333334v128h-85.333333v-128a128 128 0 0 0-128-128h-768a42.666667 42.666667 0 0 1-24.746667-77.397334L316.586667 0l49.493333 69.461333-190.293333 135.936h634.88z m-597.333333 597.333334a213.333333 213.333333 0 0 1-213.333334-213.333334v-128h85.333334v128a128 128 0 0 0 128 128h768a42.666667 42.666667 0 0 1 24.746666 77.397334l-298.666666 213.333333-49.493334-69.461333 190.293334-135.936H213.333333z" p-id="947"></path></svg></span>
       </div>
   </div>`;
-  console.log('test')
-  let config = function() {
-      let cache = JSON.parse(localStorage.touchFishDatas || null);
-      if (cache == null) {
-          cache = {};
-          cache['currUse'] = 'sleepCat';
-          cache.resource = {};
-          cache.resource['sleepCat'] = defaultHTML;
-          updateLocalStorage();
-      }
+    console.log('test')
+    let config = function () {
+        let cache = JSON.parse(localStorage.touchFishDatas || null);
+        if (cache == null) {
+            cache = {};
+            cache['currUse'] = 'sleepCat';
+            cache.resource = {};
+            cache.resource['sleepCat'] = defaultHTML;
+            updateLocalStorage();
+        }
 
-      function updateLocalStorage() {
-          localStorage.touchFishDatas = JSON.stringify(cache);
-      }
-      return {
-          add(key, html) {
-              cache.resource[key] = html;
-              updateLocalStorage();
-          },
-          remove(key) {
-              delete cache.resource[key];
-              updateLocalStorage();
-          },
-          change(key) {
-              cache['currUse'] = key;
-              changeHTML(cache.resource[key]);
-              updateLocalStorage();
-          },
-          curr() {
-              return cache.resource[cache['currUse']];
-          },
-          next() {
-              let keys = Object.keys(cache.resource);
-              let i = keys.indexOf(cache['currUse']);
-              return cache.resource[keys[(i + 1) % keys.length]];
-          },
-          update(old, newK, html) {
-              delete cache.resource[old];
-              cache.resource[newK] = html;
-              updateLocalStorage();
-          },
-          resource() {
-              return cache.resource;
-          },
-          currKey(){
-              return cache['currUse'];
-          }
-      }
-  }()
-  $('body').prepend(html)
-  $('head').append(`<style>
+        function updateLocalStorage() {
+            localStorage.touchFishDatas = JSON.stringify(cache);
+        }
+
+        return {
+            add(key, html) {
+                cache.resource[key] = html;
+                updateLocalStorage();
+            },
+            remove(key) {
+                delete cache.resource[key];
+                updateLocalStorage();
+            },
+            change(key) {
+                cache['currUse'] = key;
+                changeHTML(cache.resource[key]);
+                updateLocalStorage();
+            },
+            curr() {
+                return cache.resource[cache['currUse']];
+            },
+            next() {
+                let keys = Object.keys(cache.resource);
+                let i = keys.indexOf(cache['currUse']);
+                return cache.resource[keys[(i + 1) % keys.length]];
+            },
+            update(old, newK, html) {
+                delete cache.resource[old];
+                cache.resource[newK] = html;
+                updateLocalStorage();
+            },
+            resource() {
+                return cache.resource;
+            },
+            currKey() {
+                return cache['currUse'];
+            }
+        }
+    }()
+    $('body').prepend(html)
+    $('head').append(`<style>
   .touch-fish,
   .touch-fish iframe {
       width: 250px;
@@ -126,82 +127,82 @@
       color: #fff;
   }
 </style>`)
-  let delayFunc = function() {
-      let time;
-      return {
-          delay(func, t = 1200) {
-              window.clearTimeout(time);
-              time = setTimeout(() => func(), t);
-          }
-      }
-  }();
-  $('.list').click(function() {
-      let rols = `<div class="tf-list" style="">
+    let delayFunc = function () {
+        let time;
+        return {
+            delay(func, t = 1200) {
+                window.clearTimeout(time);
+                time = setTimeout(() => func(), t);
+            }
+        }
+    }();
+    $('.list').click(function () {
+        let rols = `<div class="tf-list" style="">
           <input old="oldK" name="key" placeholder="描述" style="width: 100px;">
           <input name="html" placeholder="网页内容">
           <input name="useThis" type="button" value="启用">
           <input name="del" type="button" value="删除">
       </div>`;
-      let html =
-          `<div class="tf-m-page" style="background:#fff;position: fixed;z-index: 99999;top: calc(50vh - 200px);left: calc(50vw - 260px); width: 520px;height: 400px;overflow: auto;border: 1px solid orangered;padding: 10px;">
+        let html =
+            `<div class="tf-m-page" style="background:#fff;position: fixed;z-index: 99999;top: calc(50vh - 200px);left: calc(50vw - 260px); width: 520px;height: 400px;overflow: auto;border: 1px solid orangered;padding: 10px;">
           <div class="tf-btn-add" style="">ADD</div>
           </div>`;
-      $('body').prepend(html);
+        $('body').prepend(html);
 
-      {
-          let rtime; // 定时器交互
-          $('.tf-m-page').mouseleave(function() {
-              rtime = setTimeout(() => $('.tf-m-page').remove(), 600)
-          }).mouseenter(function() {
-              window.clearTimeout(rtime)
-          });
-      }
-      $('.tf-m-page').on('input propertychange', 'input', function() {
-          console.log('inpu')
-          let $t = $(this).parent().find('input');
-          let old = $($t[0]).attr('old'),
-              newK = $($t[0]).val(),
-              h = $($t[1]).val();
-          delayFunc.delay(() => {
-              config.update(old, newK, h);
-          })
-      }).on('click', 'input[name="del"]', function() {
-          $(this).parent().remove();
-          config.remove($(this).prev('[name="key"]').val())
-      }).on('click', 'input[name="useThis"]', function() {
-          if ($(this).hasClass('tf-btn-use')) {
-              return false;
-          }
-          $('.tf-list input[name="useThis"]').removeClass('tf-btn-use');
-          $(this).addClass('tf-btn-use');
-          config.change($(this).prev().prev().val())
-      });
-      $('.tf-btn-add').click(function() {
-          $(this).parent().append(rols);
-      })
-      // 初始化表单数据
-      Object.keys(config.resource()).forEach(k => {
-          $('.tf-m-page').append(rols);
-          let $input = $('.tf-m-page>.tf-list:last>input');
-          $($input[0]).attr('old', k).val(k);
-          $($input[1]).val(config.resource()[k]);
-      })
-      // 并选中当前的
-      $(`input[old="${config.currKey()}"]`).next().next().addClass('tf-btn-use')
-  })
-  $('.change').click(function() {
-      console.log('change');
-      changeHTML(config.next());
-  })
-  changeHTML(config.curr());
-  $('.touch-fish-toolbar').hide()
-  $('.touch-fish').mouseover(function() {
-      $('.touch-fish-toolbar').show();
-  }).mouseout(function() {
-      $('.touch-fish-toolbar').hide()
-  });
+        {
+            let rtime; // 定时器交互
+            $('.tf-m-page').mouseleave(function () {
+                rtime = setTimeout(() => $('.tf-m-page').remove(), 600)
+            }).mouseenter(function () {
+                window.clearTimeout(rtime)
+            });
+        }
+        $('.tf-m-page').on('input propertychange', 'input', function () {
+            console.log('inpu')
+            let $t = $(this).parent().find('input');
+            let old = $($t[0]).attr('old'),
+                newK = $($t[0]).val(),
+                h = $($t[1]).val();
+            delayFunc.delay(() => {
+                config.update(old, newK, h);
+            })
+        }).on('click', 'input[name="del"]', function () {
+            $(this).parent().remove();
+            config.remove($(this).prev('[name="key"]').val())
+        }).on('click', 'input[name="useThis"]', function () {
+            if ($(this).hasClass('tf-btn-use')) {
+                return false;
+            }
+            $('.tf-list input[name="useThis"]').removeClass('tf-btn-use');
+            $(this).addClass('tf-btn-use');
+            config.change($(this).prev().prev().val())
+        });
+        $('.tf-btn-add').click(function () {
+            $(this).parent().append(rols);
+        })
+        // 初始化表单数据
+        Object.keys(config.resource()).forEach(k => {
+            $('.tf-m-page').append(rols);
+            let $input = $('.tf-m-page>.tf-list:last>input');
+            $($input[0]).attr('old', k).val(k);
+            $($input[1]).val(config.resource()[k]);
+        })
+        // 并选中当前的
+        $(`input[old="${config.currKey()}"]`).next().next().addClass('tf-btn-use')
+    })
+    $('.change').click(function () {
+        console.log('change');
+        changeHTML(config.next());
+    })
+    changeHTML(config.curr());
+    $('.touch-fish-toolbar').hide()
+    $('.touch-fish').mouseover(function () {
+        $('.touch-fish-toolbar').show();
+    }).mouseout(function () {
+        $('.touch-fish-toolbar').hide()
+    });
 
-  function changeHTML(html) {
-      $('iframe[class="showHtml"]').contents().find('html').empty().append(html);
-  }
+    function changeHTML(html) {
+        $('iframe[class="showHtml"]').contents().find('html').empty().append(html);
+    }
 }
